@@ -35,3 +35,11 @@ def run_script_end(request):
 def run_script_prolong(request):
     subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/prolong.sh"], shell=False)
     return HttpResponse("Script executed successfully")
+
+def run_script_new(request):
+    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/new.sh"], shell=False)
+    return HttpResponse("Script executed successfully")
+
+def run_script_delete(request):
+    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/delete.sh"], shell=False)
+    return HttpResponse("Script executed successfully")
