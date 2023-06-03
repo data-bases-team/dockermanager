@@ -24,6 +24,14 @@ def register(request):
             return redirect(reverse("dashboard"))
 
 
-def run_script(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/test.sh"], shell=False)
+def run_script_start(request):
+    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/start.sh"], shell=False)
+    return HttpResponse("Script executed successfully")
+
+def run_script_end(request):
+    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/end.sh"], shell=False)
+    return HttpResponse("Script executed successfully")
+
+def run_script_prolong(request):
+    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/prolong.sh"], shell=False)
     return HttpResponse("Script executed successfully")

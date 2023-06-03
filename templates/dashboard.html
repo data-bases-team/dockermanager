@@ -33,24 +33,41 @@
           <tbody>
             <tr>
               <td>Container 1</td>
-              <td><button id="run-script-btn">Run script</button>
-
-                <script>
-                    const btn = document.getElementById("run-script-btn");
-                    btn.addEventListener("click", () => {
-                        fetch("/run_script/")
-                            .then(response => response.text())
-                            .then(data => console.log(data))
-                            .catch(error => console.error(error));
-                    });
-                </script>
-                </td>
-
-              <td><button class="btn btn-success">Start </button></td>
-              <td><button class="btn btn-danger">Stop</button></td>
+              <td><button class="btn btn-success" id="run-script-start" >Start 
+              </button></td>
+              <td><button class="btn btn-danger" id="run-script-end">Stop</button></td>
               <td>10/31/2021</td>
-              <td><button class="btn btn-primary">Prolong</button></td>
+              <td><button class="btn btn-primary" id="run-script-prolong" >Prolong</button></td>
             </tr>
+
+            <script>
+                const start = document.getElementById("run-script-start");
+                start.addEventListener("click", () => {
+                    fetch("/run_script_start/")
+                        .then(response => response.text())
+                        .then(data => console.log(data))
+                        .catch(error => console.error(error));
+                });
+
+                const stop = document.getElementById("run-script-end");
+                stop.addEventListener("click", () => {
+                    fetch("/run_script_end/")
+                        .then(response => response.text())
+                        .then(data => console.log(data))
+                        .catch(error => console.error(error));
+                });
+
+                const prolong = document.getElementById("run-script-prolong");
+
+                prolong.addEventListener("click", () => {
+                    fetch("/run_script_prolong/")
+                        .then(response => response.text())
+                        .then(data => console.log(data))
+                        .catch(error => console.error(error));
+                });
+
+            </script>
+
             <tr>
               <td>Container 2</td>
               <td><button class="btn btn-success">Start</button></td>
