@@ -33,7 +33,20 @@
           <tbody>
             <tr>
               <td>Container 1</td>
-              <td><button class="btn btn-success">Start</button></td>
+              <td><button id="run-script-btn">Run script</button>
+
+                <script>
+                    const btn = document.getElementById("run-script-btn");
+                    btn.addEventListener("click", () => {
+                        fetch("/run_script/")
+                            .then(response => response.text())
+                            .then(data => console.log(data))
+                            .catch(error => console.error(error));
+                    });
+                </script>
+                </td>
+
+              <td><button class="btn btn-success">Start </button></td>
               <td><button class="btn btn-danger">Stop</button></td>
               <td>10/31/2021</td>
               <td><button class="btn btn-primary">Prolong</button></td>
