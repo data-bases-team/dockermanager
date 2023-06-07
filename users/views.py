@@ -6,6 +6,21 @@ from django.shortcuts import render
 import subprocess
 from django.http import HttpResponse
 import pathlib
+from .forms import ContainerForm
+from django.http import HttpResponseRedirect
+
+def add_container(request):
+    submitted = False
+    if request.method == "POST":
+        form = ContainerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add?submitted=True')
+    else:
+        form = ContainerForm
+        if 'submitted' in request.GET:
+            submitted=True
+    return render(request, 'add_container.html', {'form':form, 'submitted':submitted})
 
 def dashboard(request):
     return render(request, "dashboard.html")
