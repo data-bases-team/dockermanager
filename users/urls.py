@@ -5,6 +5,7 @@ from users.views import dashboard
 urlpatterns = [
     path('accounts/', include("django.contrib.auth.urls")),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path('', views.dashboard, name="dashboard"),
     path('register/', views.register, name="register"),
     path('run_script_start/', views.run_script_start, name='run_script_start'),
     path('run_script_end/', views.run_script_end, name='run_script_end'),

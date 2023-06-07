@@ -8,6 +8,9 @@ from django.http import HttpResponse
 import pathlib
 from .forms import ContainerForm
 from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
+from .models import container
+
 
 def add_container(request):
     submitted = False
@@ -23,7 +26,11 @@ def add_container(request):
     return render(request, 'add_container.html', {'form':form, 'submitted':submitted})
 
 def dashboard(request):
-    return render(request, "dashboard.html")
+    containers = container.objects.filter(userid=request.user)
+    #containers = container.objects.all()
+    #a = set(containers)
+    #print(a)
+    return render(request, "dashboard.html", {'containeros':containers})
     
 def register(request):
     if request.method == "GET":
