@@ -3,75 +3,64 @@
 {% extends 'base.html' %}{% csrf_token %}{% block content %}
 <div>
   {% if user.is_authenticated %}
-  <a href="{% url 'logout' %}">Logout</a>
-  <a href="{% url 'password_change' %}">Change password</a>
+  <a href="{% url 'logout' %}">Выход</a>
+  <a href="{% url 'password_change' %}">Изменить Пароль</a>
   {% else %}
-  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'login' %}">Вход</a>
   {% endif %}
   <div class="container">
-    <h1>Personal Account Page</h1>
+    <h1>Мой Аккаунт</h1>
     <hr />
-    <h2>Account Information</h2>
-    <p><strong>Account Name:</strong> {{ user.username }}</p>
+    <h2>Информация о Пользователе</h2>
+    <p><strong>Имя Пользователя:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     {% comment %} <p><strong>Phone:</strong> 555-555-5555</p> {% endcomment %}
     {% comment %} точно нужен телефон?? {% endcomment %}
     <hr />
-    <h2>Docker Containers</h2>
+    <h2>Продукты</h2>
     <table class="table">
       <thead>
         <tr>
-          <th>Container Name</th>
-          <th>Status</th>
-          <th>Expiration date</th>
-          <th>Prolong</th>
-          <th>Delete</th>
+          <th>Название Продукта</th>
+          <th>Статус</th>
+          <th>Срок Подписки</th>
+          <th>Продлить</th>
+          <th>Удалить</th>
         </tr>
       </thead>
       <tbody>
         {%for container in containeros%}
         <tr>
           <td>
-            <p>{{container.name}}</p>
+            <p><a href="/{{container.name}}">{{container.name}}</a></p>
           </td>
           {%if container.status == 'd'%}
           <td>
-            <button class="btn btn-success" id="run-script-start" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Start</button>
+            <button class="btn btn-success" id="run-script-start" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Запустить</button>
           </td>
           {%elif container.status == 'e'%}
           <td>
-            <button class="btn btn-danger" id="run-script-end" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Stop</button>
+            <button class="btn btn-danger" id="run-script-end" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Остановить</button>
           </td>
           {%endif%}
           <td>{{container.expdate}}</td>
           <td>
             <button class="btn btn-primary" id="run-script-prolong" onclick="window.location.href='{% url 'prolong_container' container_name=container.name%}'">
-              Prolong
+              Продлить
             </button>
           </td>
           <td>
             <button class="btn btn-danger" onclick="deleteContainer('{% url 'delete_container' container_name=container.name %}')">
-              delete
+              Удалить
             </button>
           </td>
         </tr>
         {%endfor%}
         <tr>
-          <td><button type="button" class="btn btn-light" onclick="window.location.href='{% url 'add_container' %}'">new</button></td>
+          <td><button type="button" class="btn btn-light" onclick="window.location.href='{% url 'add_container' %}'">Добавить Продукт</button></td>
         </tr>
         <script>
-          function startContainer(containerName) {
-            
-            window.location.href = window.location.href + '?start=' + containerName;
-          }
-          function stopContainer(containerName) {
-            // Code to start the container
-            window.location.href = window.location.href + '?stop=' + containerName;
-          }
-          function prolongContainer(containerName) {
-            // Code to start the container
-            window.location.href = window.location.href + '?prolong=' + containerName;
-          }
+
           function deleteContainer(url) {
             var confirmation
             var result = confirm("Are you sure you want to delete this container?");
@@ -87,6 +76,5 @@
     </table>
   </div>
 </div>
-
 
 {% endblock %}

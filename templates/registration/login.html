@@ -1,16 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Login</h2>
+<center>
+<h2>Логин</h2>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Login">
+    <input type="submit" value="Войти">
 </form>
 
-<a href="{% url 'dashboard' %}">Back to dashboard</a>
-<a href="{% url 'password_reset' %}">Reset password</a>
-<a href="{% url 'register' %}">Register</a>
+<a href="{% url 'dashboard' %}">Назад к Продуктам</a>
+<a href="{% url 'password_reset' %}">Восстановление Пароля</a>
+<a href="{% url 'register' %}">Регистрация</a>
 
+<script>
+    var pp = document.querySelectorAll('[for]');
+    pp[0].innerHTML = 'Имя пользователя';
+    pp[1].innerHTML = 'Пароль';
+</script>
+
+</center>
 {% endblock %}

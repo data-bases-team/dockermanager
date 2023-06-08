@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Register</h2>
+<center>
+<h2>Регистрация</h2>
 
 <form method="post">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="Register">
+    <input type="submit" value="Зарегестрироваться">
 </form>
 
-<a href="{% url 'login' %}">Back to login</a>
+<a href="{% url 'login' %}">Вход</a>
+</center>
+
+<script>
+    var pp = document.querySelectorAll('[for]');
+    pp[0].innerHTML = 'Имя пользователя';
+    // pp[1].innerHTML = 'Имя пользователя';
+    pp[2].innerHTML = 'Пароль';
+    pp[3].innerHTML = 'Повторите пароль';
+</script>
 {% endblock %}

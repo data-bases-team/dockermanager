@@ -1,15 +1,15 @@
 
 {% extends 'base.html' %} {% block content %}
     <center>
-        <h1>Add new container</h1>
+        <h1>Добавить новый продукт</h1>
         <br><br/>
         {% if submitted %}
-            Container added!
+            Продукт добавлен!
         {% else %}
             <form action="" method=POST>
                 {% csrf_token %}
                 {{form.as_p }}
-                <input type="submit" value="Submit" class="btn btn-success">
+                <input type="submit" value="Подтвердить" class="btn btn-success">
             </form>
         {% endif %}
 

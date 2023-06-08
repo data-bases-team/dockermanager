@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 
 ]
 SITE_ID = 1
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://194.36.161.123:9980']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +65,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dockermanager.wsgi.application'
-
+LANGUAGE_CODE = 'ru-RU'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'dockermanager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db' / 'db.sqlite3',
     }
 }
 

@@ -10,14 +10,15 @@ STATUS_CHOICES = [
     ('e', 'Enabled'),
     ('d', 'Disabled'),
 ]
-
+def default_time():
+    return datetime.now() + timedelta(minutes = 10)
 class container(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,unique=True)
     login = models.CharField(max_length=50,null=True)
     password = models.CharField(max_length=50,null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='e')
-    expdate = models.DateTimeField(default=(datetime.now() + timedelta(minutes = 10)))
+    expdate = models.DateTimeField(default=(default_time),)
     link = models.TextField(max_length=350, default=None, blank=True, null=True)
     port = models.IntegerField(unique=True, null=True, blank=True)
     userid = models.ForeignKey('auth.User', on_delete=models.CASCADE,  blank=True, null=True, default=None)

@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    image: dockermanager
+    build: .
+    volumes:
+      - ./db:/dockermanager/db
+    ports:
+      - "8001:8001"
+    container_name: dockermanager
+    command: python manage.py runserver 0.0.0.0:8001

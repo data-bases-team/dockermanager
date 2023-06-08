@@ -11,8 +11,10 @@ from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from .models import container
 from datetime import datetime, timedelta
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/accounts/login/')
 def add_container(request):
     submitted = False
     if request.method == "POST":
@@ -27,11 +29,13 @@ def add_container(request):
             return redirect(reverse("dashboard"))
     return render(request, 'add_container.html', {'form':form, 'submitted':submitted})
 
+@login_required(login_url='/accounts/login/')
 def delete_container(request, container_name):
     print(container_name)
     container.objects.get(name=container_name).delete()
     return redirect(reverse("dashboard"))
 
+@login_required(login_url='/accounts/login/')
 def restatus_container(request, container_name):
     cont = container.objects.get(name=container_name)
     if cont.status == 'e':
@@ -41,12 +45,15 @@ def restatus_container(request, container_name):
     cont.save()
     return redirect(dashboard)
 
+@login_required(login_url='/accounts/login/')
 def prolong_container(request, container_name):
     cont = container.objects.get(name=container_name)
     cont.expdate=datetime.now() + timedelta(minutes = 10)
+    cont.status = 'e'
     cont.save()
     return redirect(dashboard)
 
+@login_required(login_url='/accounts/login/')
 def dashboard(request):
     containers = container.objects.filter(userid=request.user)
     return render(request, "dashboard.html", {'containeros':containers})
@@ -64,23 +71,3 @@ def register(request):
             login(request, user)
             return redirect(reverse("dashboard"))
 
-
-def run_script_start(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/start.sh"], shell=False)
-    return HttpResponse("Script executed successfully")
-
-def run_script_end(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/end.sh"], shell=False)
-    return HttpResponse("Script executed successfully")
-
-def run_script_prolong(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/prolong.sh"], shell=False)
-    return HttpResponse("Script executed successfully")
-
-def run_script_new(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/new.sh"], shell=False)
-    return HttpResponse("Script executed successfully")
-
-def run_script_delete(request):
-    subprocess.run(["bash", str(pathlib.Path(__file__).parent.parent.resolve()) + "/delete.sh"], shell=False)
-    return HttpResponse("Script executed successfully")
