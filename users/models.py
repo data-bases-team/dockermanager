@@ -14,6 +14,8 @@ STATUS_CHOICES = [
 class container(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,unique=True)
+    login = models.CharField(max_length=50,null=True)
+    password = models.CharField(max_length=50,null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='e')
     expdate = models.DateTimeField(default=(datetime.now() + timedelta(minutes = 10)))
     link = models.TextField(max_length=350, default=None, blank=True, null=True)

@@ -12,5 +12,9 @@ urlpatterns = [
     path('run_script_prolong/', views.run_script_prolong, name='run_script_prolong'),
     path('run_script_new/', views.run_script_new, name='run_script_new'),
     path('run_script_delete/', views.run_script_delete, name='run_script_delete'),
-    path('add/',views.add_container, name='add_container',)
+    path('add/',views.add_container, name='add_container',),
+    path('delete/<str:container_name>',views.delete_container, name='delete_container',),
+    path('restatus/<str:container_name>',views.restatus_container, name='restatus_container',),
+    path('prolong/<str:container_name>',views.prolong_container, name='prolong_container',),
+    
 ]

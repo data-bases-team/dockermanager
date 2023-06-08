@@ -14,7 +14,7 @@
     <h2>Account Information</h2>
     <p><strong>Account Name:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Phone:</strong> 555-555-5555</p>
+    {% comment %} <p><strong>Phone:</strong> 555-555-5555</p> {% endcomment %}
     {% comment %} точно нужен телефон?? {% endcomment %}
     <hr />
     <h2>Docker Containers</h2>
@@ -22,9 +22,8 @@
       <thead>
         <tr>
           <th>Container Name</th>
-          <th>Start</th>
-          <th>Stop</th>
-          <th>Expires</th>
+          <th>Status</th>
+          <th>Expiration date</th>
           <th>Prolong</th>
           <th>Delete</th>
         </tr>
@@ -35,79 +34,59 @@
           <td>
             <p>{{container.name}}</p>
           </td>
+          {%if container.status == 'd'%}
           <td>
-            <button class="btn btn-success" id="run-script-start">Start</button>
+            <button class="btn btn-success" id="run-script-start" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Start</button>
           </td>
+          {%elif container.status == 'e'%}
           <td>
-            <button class="btn btn-danger" id="run-script-end">Stop</button>
+            <button class="btn btn-danger" id="run-script-end" onclick="window.location.href='{% url 'restatus_container' container_name=container.name%}'">Stop</button>
           </td>
+          {%endif%}
           <td>{{container.expdate}}</td>
           <td>
-            <button class="btn btn-primary" id="run-script-prolong">
+            <button class="btn btn-primary" id="run-script-prolong" onclick="window.location.href='{% url 'prolong_container' container_name=container.name%}'">
               Prolong
             </button>
           </td>
           <td>
-            <button class="btn btn-danger" id="run-script-delete">
+            <button class="btn btn-danger" onclick="deleteContainer('{% url 'delete_container' container_name=container.name %}')">
               delete
             </button>
           </td>
         </tr>
         {%endfor%}
         <tr>
-          <td><button type="button" class="btn btn-light" id="run-script-new">new</button></td>
+          <td><button type="button" class="btn btn-light" onclick="window.location.href='{% url 'add_container' %}'">new</button></td>
         </tr>
-
         <script>
-          const start = document.getElementById("run-script-start");
-          start.addEventListener("click", () => {
-            fetch("/run_script_start/")
-              .then((response) => response.text())
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
-          });
-
-          const stop = document.getElementById("run-script-end");
-          stop.addEventListener("click", () => {
-            fetch("/run_script_end/")
-              .then((response) => response.text())
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
-          });
-
-          const prolong = document.getElementById("run-script-prolong");
-
-          prolong.addEventListener("click", () => {
-            fetch("/run_script_prolong/")
-              .then((response) => response.text())
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
-            });
-
+          function startContainer(containerName) {
             
-          const delete = document.getElementById("run-script-delete");
+            window.location.href = window.location.href + '?start=' + containerName;
+          }
+          function stopContainer(containerName) {
+            // Code to start the container
+            window.location.href = window.location.href + '?stop=' + containerName;
+          }
+          function prolongContainer(containerName) {
+            // Code to start the container
+            window.location.href = window.location.href + '?prolong=' + containerName;
+          }
+          function deleteContainer(url) {
+            var confirmation
+            var result = confirm("Are you sure you want to delete this container?");
+            if (result == true){
+              window.location.href = url;
+            }
+            {% comment %} location.reload(); {% endcomment %}
 
-          delete.addEventListener("click", () => {
-            fetch("/run_script_delete/")
-              .then((response) => response.text())
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
-          });
-
-          const new = document.getElementById("run-script-new");
-
-          new.addEventListener("click", () => {
-            fetch("/run_script_new/")
-              .then((response) => response.text())
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
-          });
-
+          }
         </script>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
 
 {% endblock %}

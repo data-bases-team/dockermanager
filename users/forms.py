@@ -11,4 +11,4 @@ class CustomUserCreationForm(UserCreationForm):
 class ContainerForm(ModelForm):
     class Meta:
         model = container
-        fields = ('name', 'link')
+        fields = ('name', 'login', 'password')

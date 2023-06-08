@@ -10,6 +10,7 @@ from .forms import ContainerForm
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from .models import container
+from datetime import datetime, timedelta
 
 
 def add_container(request):
@@ -23,13 +24,31 @@ def add_container(request):
         form = ContainerForm
         if 'submitted' in request.GET:
             submitted=True
+            return redirect(reverse("dashboard"))
     return render(request, 'add_container.html', {'form':form, 'submitted':submitted})
+
+def delete_container(request, container_name):
+    print(container_name)
+    container.objects.get(name=container_name).delete()
+    return redirect(reverse("dashboard"))
+
+def restatus_container(request, container_name):
+    cont = container.objects.get(name=container_name)
+    if cont.status == 'e':
+        cont.status = 'd'
+    else:
+        cont.status = 'e'
+    cont.save()
+    return redirect(dashboard)
+
+def prolong_container(request, container_name):
+    cont = container.objects.get(name=container_name)
+    cont.expdate=datetime.now() + timedelta(minutes = 10)
+    cont.save()
+    return redirect(dashboard)
 
 def dashboard(request):
     containers = container.objects.filter(userid=request.user)
-    #containers = container.objects.all()
-    #a = set(containers)
-    #print(a)
     return render(request, "dashboard.html", {'containeros':containers})
     
 def register(request):
