@@ -32,7 +32,9 @@ INSTALLED_APPS = [
 
 ]
 SITE_ID = 1
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
+SITE_DOMAIN = 'exampleee.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,11 +124,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "dashboard"
 
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 1025
+# EMAIL_HOST = "localhost"
+# EMAIL_PORT = 1025
 
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = "postmaster@sandboxb1298d571f63439c82aa31cb95ae6e0e.mailgun.org"
+EMAIL_HOST_PASSWORD = "d4ae0f3b815d4b4cb34e8522e8b36788-6d1c649a-aaf80e37"
 EMAIL_USE_TLS = True
